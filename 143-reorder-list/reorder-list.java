@@ -8,65 +8,100 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Solution {
-    public ListNode reorderList(ListNode head) {
-        if(head == null || head.next == null){
-            return head;
+
+
+
+public class Solution {
+    public ListNode reorderList(ListNode A) {
+        //A = 1, 2, 3, 4, 5
+
+        //base case
+        if(A==null|| A.next == null){
+            return A;
         }
 
-        ListNode mid = getMid(head);
+        //find middle Node
 
-        ListNode afterMid = mid.next;
-        mid.next = null;
+        ListNode mid = findMid(A);// middle Node is 2
+        
 
-        ListNode afterMidReverse = reverse(afterMid);  //not the best name afterMidReverse
+        ListNode afterMid = mid.next;// 3 -> 4 -> 5
 
-        ListNode start = head;
+        mid.next = null;// 3 -> 4 -> 5 -> null
+
+        ListNode  afterMid_reverse = reverse(afterMid);//this function calls to reverse the after mid Nodes
+
+        ListNode start = A;
 
         while(start.next != null){
+
             ListNode t1 = start.next;
-            ListNode t2 = afterMidReverse.next;
-            start.next = afterMidReverse;
+            ListNode t2 = afterMid_reverse.next;
+            start.next = afterMid_reverse;
             start = t1;
-            afterMidReverse.next = start;
-            afterMidReverse = t2;
+            afterMid_reverse.next = start;
+            afterMid_reverse = t2;
+
+        }
+        
+        if(afterMid_reverse != null){
+            start.next = afterMid_reverse;
         }
 
-        if(afterMidReverse != null){
-            start.next = afterMidReverse;
-        }
+        return A;
 
-        return head;
+
 
 
     }
-    public ListNode getMid(ListNode A){
+    public ListNode findMid(ListNode A){
+        if(A == null){
+            return null;
+        }
+
         ListNode slow = A;
         ListNode fast = A;
 
         while(fast.next != null && fast.next.next != null){
             slow = slow.next;
             fast = fast.next.next;
+            
         }
 
         return slow;
+        
     }
 
-    public ListNode reverse(ListNode head){
-        if(head == null || head.next == null){
-            return head;
+     public ListNode reverse(ListNode A){
+        if(A == null){
+            return null;
         }
 
-        ListNode h1 = head;
-        ListNode h2 = null;
+       ListNode h1 = A;
+       ListNode h2 = null;
+       //3 -> 4 -> 5
 
-        while(h1 != null){
-            ListNode temp = h1;
-            h1 = h1.next;
-            temp.next = h2;
-            h2 = temp;
-        }
+       //5 -> 4 -> 3
 
-        return h2;
+            while(h1 != null){
+                ListNode temp = h1; 
+                h1 = h1.next; 
+                temp.next = h2; 
+                h2 = temp;
+            }
+
+            return h2;
     }
 }
+
+
+// A = [1, 2, 3, 4, 5] 
+// mid --> 2
+
+//mid = 3 4 5
+
+//orgA   = 1  2  -> null
+//revMid = 5  4  3 --> null
+
+
+//(merge of orgA and revMid)--> 1 5 2 4 3
