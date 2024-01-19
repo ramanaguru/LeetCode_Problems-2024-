@@ -1,3 +1,7 @@
+RECURSION ---> MEMO ----> TABULATION
+
+
+//TABULATION CODE WILL GET SUBMITTED
 class Solution {
     public int minFallingPathSum(int[][] mat) {
 
@@ -35,5 +39,79 @@ class Solution {
         }
 
         return mini;
+    }
+}
+
+//MEMO (THIS WILL GIVE TLE)
+
+class Solution {
+    public int minFallingPathSum(int[][] mat) {
+
+        int mini = Integer.MAX_VALUE;
+        int n = mat.length;
+        int m = mat[0].length;
+        int dp[][] = new int[n][m];
+        
+        for(int row[] : dp){
+            Arrays.fill(row, -1);
+        }
+
+        for(int col = 0; col < m ; col++){
+            int val = memo(mat, n-1, col, m, dp);
+            mini = Math.min(mini, val);
+        }
+
+        return mini;
+
+
+    }
+
+    public int memo(int mat[][], int row , int col, int m, int dp[][]){
+        if(col < 0 || col >= m){
+            return (int)1e9;
+        }
+
+        if(row == 0) return mat[row][col];
+        if(dp[row][col] != -1) return dp[row][col];
+
+        int up          =   mat[row][col] + memo(mat, row-1, col, m, dp);
+        int leftDiag    =   mat[row][col] + memo(mat, row-1, col-1, m, dp);
+        int rightDiag   =   mat[row][col] + memo(mat, row-1, col+1, m, dp);
+
+        return dp[row][col] =  Math.min(up, Math.min(leftDiag, rightDiag));
+    }
+}
+
+
+//RECURSION (THIS WILL TLE)
+
+class Solution {
+    public int minFallingPathSum(int[][] mat) {
+        int mini = Integer.MAX_VALUE;
+        int n = mat.length;
+        int m = mat[0].length;
+
+        for(int col = 0; col < m ; col++){
+            int val = recursion(mat, n-1, col, m);
+            mini = Math.min(mini, val);
+        }
+
+        return mini;
+
+
+    }
+
+    public int recursion(int mat[][], int row , int col, int m){
+        if(col < 0 || col >= m){
+            return (int)1e9;
+        }
+
+        if(row == 0) return mat[row][col];
+
+        int up          =   mat[row][col] + recursion(mat, row-1, col, m);
+        int leftDiag    =   mat[row][col] + recursion(mat, row-1, col-1, m);
+        int rightDiag   =   mat[row][col] + recursion(mat, row-1, col+1, m);
+
+        return Math.min(up, Math.min(leftDiag, rightDiag));
     }
 }
