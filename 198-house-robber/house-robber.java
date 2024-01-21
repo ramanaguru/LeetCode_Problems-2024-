@@ -1,7 +1,6 @@
 class Solution {
     public int rob(int[] nums) {
-        //Tabulation  will get submitted bbut we can still optimise
-        //Tc: O(N) ; Sc :O(N)
+        //Tc: O(N) ; Sc :O(1)
         int n = nums.length;
         int ans = Integer.MIN_VALUE;
 
@@ -10,21 +9,25 @@ class Solution {
             return ans;
         }
 
-        int dp[] = new int[n];
-        dp[0] = nums[0];
+       
+        int prev= nums[0];
+        int prev2 = 0;
 
         for(int idx = 1 ; idx < n; idx++){
             int take = nums[idx];
             if(idx > 1){
-                take += dp[idx-2];
+                take += prev2;
             }
-            int notTake = dp[idx-1];
+            int notTake = 0 + prev;
 
-            dp[idx] = Math.max(take , notTake);
+            int curr = Math.max(take , notTake);
+
+            prev2 = prev;
+            prev = curr;
 
         }
 
-        return dp[n-1];
+        return prev;
 
     }
 
