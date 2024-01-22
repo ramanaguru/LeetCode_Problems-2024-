@@ -1,25 +1,25 @@
+import java.util.HashSet;
+
 class Solution {
     public int[] findErrorNums(int[] nums) {
-        int freq[] = new int[nums.length];
+        int dup = 0;
+        int miss = 0;
 
-        for(int i = 0; i < nums.length; i++){
-            freq[nums[i]-1]++;
+        HashSet<Integer> set = new HashSet<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            if (set.contains(nums[i])) {
+                dup = nums[i];
+            }
+            set.add(nums[i]);
         }
 
-        int ans[] = new int[2];
-
-        for(int i  = 0; i < nums.length; i++){
-            if(freq[i] > 1){
-                ans[0] = i+1;
-            }
-            if(freq[i] == 0){
-                ans[1] = i +1;
+        for (int i = 1; i <= nums.length; i++) {
+            if (!set.contains(i)) {
+                miss = i;
             }
         }
 
-        return ans;
-
-
-        
+        return new int[]{dup, miss};
     }
 }
