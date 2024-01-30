@@ -1,5 +1,7 @@
 class Solution {
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+
+        //TC : O(N x M + N x M x 4) ~= O(N * M)   ;   SC: O(N x M + N x M)
         int initial_col = image[sr][sc];
 
          if (initial_col == color) {
