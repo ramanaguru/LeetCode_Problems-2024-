@@ -1,4 +1,15 @@
 class Solution {
+/*
+        Steps I followed
+        Used MultiSource BFS
+        We need push all rotten organes first
+        No need of adjacent lists because we can calculate  all Adjaacent nodes
+        Given matrix itself we marked it as rotten
+        from observation we came to know count the no of levels to get time
+
+        I can Understand you  friend , Please do dry run then it all makes sense
+*/
+
 
 
     //Tc : O(N * M)    ;  SC  :O(N * M)
