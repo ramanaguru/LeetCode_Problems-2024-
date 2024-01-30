@@ -8,6 +8,7 @@ class Solution {
         from observation we came to know count the no of levels to get time
 
         I can Understand you  friend , Please do dry run then it all makes sense
+
 */
 
 
