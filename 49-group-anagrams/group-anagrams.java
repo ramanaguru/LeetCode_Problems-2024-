@@ -1,40 +1,42 @@
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-        //HashMap <String, List<String>> looks like word, freq ==> <e1a1t1, <eat> >
+        HashMap<String, List<String>> hm = new HashMap<>();
+        for(String str : strs){
+            char[] ch = str.toCharArray();
+            Arrays.sort(ch);
 
-        HashMap<String , List<String>> hm = new HashMap<>();
+            String sorted_str = new String(ch);
+            if(!hm.containsKey(sorted_str)){
+                hm.put(sorted_str, new ArrayList<>());
+            }
 
-        for(String str: strs){
-            String freq = check(str);
-            if(hm.containsKey(freq)){
-                hm.get(freq).add(str);
-            }
-            else{
-                ArrayList<String> temp = new ArrayList<>();
-                temp.add(str);
-                hm.put(freq, temp);
-            }
+            hm.get(sorted_str).add(str);
         }
 
         return new ArrayList<>(hm.values());
     }
-
-    public String check(String str){
-        int freq[] = new int[26];
-        char ch[] = str.toCharArray();
-        
-       for(char c : ch){
-           freq[c - 'a']++;
-       }
-       
-       StringBuilder sb = new StringBuilder();
-
-       for(int i = 0 ; i < 26; i++){
-           if(freq[i] != 0){
-               sb.append((char)('a' + i)).append(freq[i]);
-           }
-       }
-
-       return sb.toString();
-    }
 }
+
+/*
+
+   sortedStr  :  str
+
+{
+  "aet": ["eat", "tea", "ate"],
+  "ant": ["tan", "nat"],
+  "abt": ["bat"]
+}
+
+OUtput : 
+
+
+[
+  ["eat", "tea", "ate"],
+  ["tan", "nat"],
+  ["bat"]
+]
+
+
+
+
+*/
