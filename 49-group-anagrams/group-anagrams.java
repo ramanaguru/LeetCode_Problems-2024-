@@ -19,6 +19,14 @@ class Solution {
 
 /*
 
+
+Tc : O(NK log K) ; Sc : O(NK)
+
+
+N represents the number of strings in the input array strs.
+K represents the maximum length of a string in the array strs
+
+
    sortedStr  :  str
 
 {
